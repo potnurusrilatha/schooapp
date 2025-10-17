@@ -8,7 +8,7 @@ import DeletePost from "../../../../../actions/delete-post"
 
  
 const DeleteButton = ({postId}:{postId:number}) => {
-    const {mutate, error}= useMutation ({
+    const {mutate}= useMutation ({
         mutationFn: DeletePost,
         onMutate: () => toast("Deleting your post"),
         onSettled: () => toast.success("post deleted")
