@@ -13,7 +13,7 @@
   export const getSinglePost = async (slug: string) => {
     const supabase = createClient();
     return await supabase.from('posts')
-                        .select('id, title, content, slug, user_id, users("username"), images')
+                        .select('id, title, content, slug, user_id, users("username"), image')
                          .eq('slug', slug)
                          .single();
   }

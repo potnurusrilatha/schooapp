@@ -4,14 +4,14 @@ import { createClient } from './server-client'
 export const uploadImage = async (image: File) => {
     const supabase = await createClient();
 
-    const imageName: string[] = image.name.split(".")
+     const imageName: string[] = image.name.split(".")
     const path:string = `${imageName[0]}-${uuid()}.${imageName[1]}`
-
-    const {data, error} = await supabase.storage.from('image').upload(path, image)
-
+ 
+    const {data, error} = await supabase.storage.from('images').upload(path, image)
+ 
     if (error) throw error
-
-    const { data: {publicUrl} } = await supabase.storage.from('image').getPublicUrl(data.path)
+ 
+    const { data: {publicUrl} } = await supabase.storage.from('images').getPublicUrl(data.path)
     return publicUrl;
 }
 

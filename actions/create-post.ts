@@ -26,9 +26,9 @@ export const CreatePost = async (userdata: z.infer<typeof postSchema>)=> {
      const {data: {user}} = await supabase.auth.getUser();
      
      if(!user) {throw new Error("Not Authorized")}
-    
+
      const userId = user.id;
-   
+
     await supabase.from('posts')
                   .insert([{user_id: userId, slug: slug,  ...parsedData, image: publicImageUrl }])
                   .throwOnError()
