@@ -24,7 +24,7 @@ const CreatePage = () => {
         <div className="border-1 rounded-xl p-4 w-[700px] mx-auto ">
             <h2 className="font-bold text-3xl mb-4">Got something to say?</h2>
             <form onSubmit={handleSubmit(values => {
-                let imageForm = new FormData()
+                const imageForm = new FormData()
 
                 if (values.image) {
                     imageForm.append('image', values.image[0])
