@@ -1,7 +1,7 @@
 'use client'
  
 import { useQuery } from "@tanstack/react-query";
-import { getHomePosts, HomePostType } from "../../../utils/supabase/queries"
+import { getHomePosts, HomePostType } from "@/utils/supabase/queries"
 import Link from "next/link";
 import { createClient } from "@/utils/supabase/browser-client"
 
