@@ -9,30 +9,30 @@ const compat = new FlatCompat({
   baseDirectory: __dirname,
 });
 
-const eslintConfig = [
+export default [
+  // Extend Next.js + TypeScript configs
   ...compat.extends("next/core-web-vitals", "next/typescript"),
+
+  // Explicitly tell ESLint what to ignore
   {
     ignores: [
-      "node_modules/**",
-      ".next/**",
-      "out/**",
-      "build/**",
-      "next-env.d.ts",
-      "public/**",          
-      "dist/**",            
-      "coverage/**",        
-      "*.png",            
-      "*.jpg",
-      "*.jpeg",
-      "*.gif",
-      "*.svg",
-      "*.ico",
-      "*.pdf",
-      "*.woff",
-      "*.ttf",
-      "*.eot",
+      "**/node_modules/**",
+      "**/.next/**",
+      "**/out/**",
+      "**/build/**",
+      "**/dist/**",
+      "**/coverage/**",
+      "**/public/**",     // ✅ public folder (images, icons, etc.)
+      "**/*.png",
+      "**/*.jpg",
+      "**/*.jpeg",
+      "**/*.gif",
+      "**/*.svg",
+      "**/*.ico",
+      "**/*.pdf",
+      "**/*.woff",
+      "**/*.ttf",
+      "**/*.eot",
     ],
   },
 ];
-
-export default eslintConfig;
