@@ -4,7 +4,7 @@ import SignUpForm from "./SignUpForm";
 const SignUpPage = () => {
   return (
     <div className="flex min-h-screen items-center justify-center px-4">
-      <div className="w-full max-w-md rounded-2xl border border-gray-200 bg-white p-2 shadow-lg">
+      <div className="w-full max-w-md rounded-2xl border border-red-200 bg-white p-2 shadow-lg">
         <h2 className="mb-6 text-center text-2xl font-semibold text-gray-800">
           Create an Account
         </h2>

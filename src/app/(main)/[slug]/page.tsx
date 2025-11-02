@@ -1,47 +1,30 @@
-import { getSinglePost } from "@/utils/supabase/queries"
-import { createClient } from "@/utils/supabase/server-client"
-import DeleteButton from "./DeleteButton";
-import EditButton from "./EditButton";
+import { createClient } from "@/utils/supabase/server-client";
+import CommentHost from "./Comments/CommentsHost";
 
-const SinglePost = async ({ params }: { params: { slug: string } }) => {
-    const { slug } = await params
-    const { data, error } = await getSinglePost(slug)
+const SinglePost = async ({ params }) => {
+  const { slug } = params;
+  const supabase = await createClient();
+  
+  // Fetch post
+  const { data: post } = await supabase
+    .from("posts")
+    .select("*")
+    .eq("slug", slug)
+    .single();
 
-    const supabase = await createClient()
-    const { data: { user } } = await supabase.auth.getUser()
-    const isAuthor = user?.id === data?.user_id ? true : false
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
-    return (
-        <>
-            {data &&
-                <>
-                    <div className="w-2xl p-4 m-auto border-gray-700 border-1 mt-4 rounded-2xl">
-                        <h2 className="font-bold text-xl">{data.title}</h2>
-                        <p className="text-right mt-4">Author {data.users?.username}</p>
-             
-                    </div>
-                    {data.image && 
-                       <div className="w-lg p-4 m-auto border-gray-700 border-1 mt-4 rounded-2xl">
-                          <img src={data.image} width="100%" height="auto" />
-                      </div> }
-                    
-                        <div className="w-2xl p-4 m-auto border-gray-700 border-1 mt-4 rounded-2xl">
-                           {data.content && <div>{data.content}</div> }
-                        </div>
-                   
+  return (
+    <div>
+      <h1>{post.title}</h1>
+      <p>{post.content}</p>
 
-                    {isAuthor &&
-                        <div className="w-2xl p-4 m-auto border-gray-700 border-1 mt-4 rounded-2xl">
-                            <DeleteButton postId={data.id} />
-                            <EditButton slug={data.slug} /> 
+      {/* Comments Section */}
+      <CommentHost postId={post.id} user={user} />
+    </div>
+  );
+};
 
-                        </div>
-                    }
-                </>
-            }
-        </>
-    )
-
-}
-
-export default SinglePost
+export default SinglePost;
