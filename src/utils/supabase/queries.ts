@@ -5,7 +5,7 @@
   export const getHomePosts = async(supabase: ReturnType<typeof createClient>) => {
   
     return await supabase.from('posts')
-                    .select('id, title, slug, users("username")')
+                    .select('id, title, slug,image, users("username")')
                     .order('created_at', {ascending: false});
   }
 

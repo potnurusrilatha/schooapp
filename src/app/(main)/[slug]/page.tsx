@@ -20,6 +20,7 @@ const SinglePost = async ({ params }) => {
     <div>
       <h1>{post.title}</h1>
       <p>{post.content}</p>
+      <p>{post.image}</p>
 
       {/* Comments Section */}
       <CommentHost postId={post.id} user={user} />

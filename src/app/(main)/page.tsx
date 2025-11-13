@@ -25,7 +25,7 @@ export default async function Home() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {data &&
-          data.map(({ id, title, slug, users }) => (
+          data.map(({ id, title, slug, image, users }) => (
             <Link
               href={`/${slug}`}
               key={id}
@@ -33,6 +33,8 @@ export default async function Home() {
             >
               <h2 className="font-bold text-xl mb-2 text-gray-800">{title}</h2>
               <p className="text-gray-500 text-right">by {users.username}</p>
+              {image ? <img src={`${image}`} /> :<p> No image</p>}
+
             </Link>
           ))}
       </div>
