@@ -1,5 +1,6 @@
 import CommentProvider from "../CommentsProvider";
-import CommentList from "../CommentsList";
+
+import CommentsList from "../CommentsList";
 
 type Comment = {
   id: number;
@@ -32,7 +33,7 @@ const CommentsComposer = ({ comments, user, postId }: CommentsComposerProps) => 
         </p>
       )}
 
-      <CommentList comments={comments} />
+      <CommentsList comments={comments} />
     </div>
   );
 };

@@ -17,3 +17,11 @@ export const postSchema = z.object ({
     content: z.string().optional(),
     image:z.instanceof(FormData).optional()
 })
+
+export const commentSchema = z.object({
+  content: z
+    .string()
+    .min(1, "Comment cannot be empty")
+    .max(1000, "Comment is too long"),
+  postId: z.number()
+});
