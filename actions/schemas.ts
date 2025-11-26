@@ -25,3 +25,4 @@ export const commentSchema = z.object({
     .max(1000, "Comment is too long"),
   postId: z.number()
 });
+

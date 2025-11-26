@@ -1,35 +1,44 @@
 "use server";
 
+import { commentSchema } from "../actions/schemas";
+import z from "zod";
 import { createClient } from "@/utils/supabase/server-client";
 import { revalidatePath } from "next/cache";
 
-export async function CreateComment(formData: FormData) {
-  const content = formData.get("content")?.toString() || "";
-  const postId = Number(formData.get("postId"));
+export const createComment = async (
+  userdata: z.infer<typeof commentSchema>
+) => {
+  try {
+    const parsedData = commentSchema.parse(userdata);
 
-  if (!content || !postId) throw new Error("Missing content or postId");
+    const supabase = await createClient();
+    const {
+      data: { user }
+    } = await supabase.auth.getUser();
 
-  const supabase = await createClient();
+    if (!user) {
+      return { error: "Not Authorized" };
+    }
 
-  const {
-    data: { user },
-    error: userErr,
-  } = await supabase.auth.getUser();
+    const userId = user.id;
 
-  if (userErr) throw userErr;
-  if (!user) throw new Error("Not authenticated");
+    await supabase
+      .from("comments")
+      .insert([
+        {
+          user_id: userId,
+          post_id: parsedData.postId,
+          content: parsedData.content
+        }
+      ])
+      .throwOnError();
 
-  const { data: inserted, error: insertErr } = await supabase
-    .from("comments")
-    .insert({
-      post_id: postId,
-      author_id: user.id,
-      content,
-    })
-    .select("*");
-
-  if (insertErr) throw insertErr;
-
-  revalidatePath(`/posts/${postId}`);
-  return inserted;
-}
+    revalidatePath("/");
+    return { success: true };
+  } catch (error) {
+    console.error("Error creating comment:", error);
+    return {
+      error: error instanceof Error ? error.message : "An error occurred"
+    };
+  }
+};
