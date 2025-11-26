@@ -1,5 +1,3 @@
-import Logo from "@/components/Logo";
-
 
 const AuthLayout = ({
     children,
@@ -9,7 +7,7 @@ const AuthLayout = ({
     return (
         <>
         <header className="flex, justify-center, items-center, flex-wrap">
-            <Logo />
+        
             </header>
             {children}
         </>
