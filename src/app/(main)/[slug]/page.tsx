@@ -1,9 +1,8 @@
-
 import { getSinglePost } from "@/utils/supabase/queries";
 import { createClient } from "@/utils/supabase/server-client";
 import EditButton from "./EditButton";
 import DeleteButton from "./DeleteButton";
-import Comments from "./Comments";
+import Comments from "@/components/Comments"; // ← CHANGED THIS LINE
 
 const SinglePost = async ({ params }: { params: { slug: string } }) => {
   const { slug } = await params;
@@ -55,7 +54,6 @@ const SinglePost = async ({ params }: { params: { slug: string } }) => {
               <h1 className="text-4xl font-bold text-gray-900 mb-3 capitalize text-center">
                 {data.title}
               </h1>
-
             </div>
 
             {/* 🖼️ Image Section */}
@@ -81,8 +79,6 @@ const SinglePost = async ({ params }: { params: { slug: string } }) => {
             {/* ✏️ Author Actions */}
             <div className="p-6 border-t border-gray-200 bg-gray-50">
               <div className="flex justify-between items-center">
-
-                {/* Left: Edit & Delete Buttons — only author sees these */}
                 {isAuthor ? (
                   <div className="flex gap-4">
                     <DeleteButton postId={data.id} />
@@ -92,7 +88,6 @@ const SinglePost = async ({ params }: { params: { slug: string } }) => {
                   <div></div>
                 )}
 
-                {/* Right: Author Info*/}
                 <div className="flex items-center gap-2 text-gray-600 text-sm">
                   <div className="w-9 h-9 bg-gradient-to-br from-gray-600 to-green-400 rounded-full flex items-center justify-center text-white font-semibold shadow-sm">
                     {data.users?.username?.charAt(0).toUpperCase()}
@@ -106,25 +101,18 @@ const SinglePost = async ({ params }: { params: { slug: string } }) => {
                 </div>
               </div>
             </div>
-
           </article>
 
           {/* 💬 Comments Section */}
-          <div className="mt-10 bg-white rounded-2xl shadow-lg border border-gray-100 p-8">
-            <h3 className="text-2xl font-semibold text-gray-900 mb-6 border-b pb-3">
-              Comments
-            </h3>
-            <Comments
-              postId={data.id}
-              postAuthorId={data.user_id}
-              currentUserId={user?.id || null}
-              isAuthenticated={!!user}
-            />
-          </div>
+          <Comments
+            postId={data.id}
+            postAuthorId={data.user_id}
+            currentUserId={user?.id || null}
+            isAuthenticated={!!user}
+          />
         </>
       )}
     </div>
-
   );
 };
 
