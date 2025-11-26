@@ -2,7 +2,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { getCommentsByPostId, type CommentType } from "@/utils/supabase/queries";
-import CommentForm from "../CommentForm";
+import CommentForm from "@/components/Comments/index"
 import DeleteCommentButton from "../DeleteCommentButton";
 
 interface CommentsProps {
