@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import DeleteCommentButton from "@/app/(main)/[slug]/DeleteCommentButton";
-import ReplyForm from "../ReplayForm";
+import ReplyForm from '@/components/ReplayForm'
 import { CommentType } from '@/utils/supabase/queries';
 
 interface CommentItemProps {
