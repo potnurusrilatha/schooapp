@@ -2,8 +2,8 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { getCommentsByPostId } from "@/utils/supabase/queries";
-import CommentForm from '../CommentForm'
-import CommentItem from '../CommentItem'
+import CommentForm from '../CommentForm/index'
+import CommentItem from '../CommentItem/index'
 
 interface CommentsProps {
   postId: number;
