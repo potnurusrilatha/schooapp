@@ -22,36 +22,67 @@ const CreatePage = () => {
         mutationFn: CreatePost
     })
 
-    return (
-        <div className="border-1 rounded-xl p-4 w-[700px] mx-auto ">
-            <h2 className="font-bold text-3xl mb-4">Got something to say?</h2>
-            <form onSubmit={handleSubmit(values => {
-                const imageForm = new FormData()
+     return (
+    <div className="max-w-2xl mx-auto mt-10 mb-10  bg-white shadow-md rounded-2xl p-8 border border-gray-300 ">
+      <h2 className="font-semibold text-3xl mb-8 text-center text-gray-800">
+        Got something to say?
+      </h2>
 
-                if (values.image) {
-                    imageForm.append('image', values.image[0])
-                }
+      <form
+        onSubmit={handleSubmit(values => {
+          let imageForm = new FormData();
 
-                mutate({title: values.title, content: values.content, image: imageForm})
-            }
-            )} className="flex flex-col mb-4">
-                <fieldset>
-                    <label htmlFor="title">Post title</label>
-                    <input className="ml-2 mb-4 px-2" {...register("title")} id="title" placeholder="What's your post called..." />
-                </fieldset>
-                <fieldset>
-                    <label htmlFor="content">What are you going to talk about?</label>
-                    <textarea className="ml-2 mb-4 px-2 border-1 rounded-xl w-full" {...register("content")} id="content" placeholder="Start talking..." />
-                </fieldset>
-                <fieldset>
-                    <label htmlFor="image">Upload an image for your post if you like</label>
-                    <input type="file" {...register("image")} id="image"></input>
-                    {errors.image && <ErrorMessage message={errors.image.message!} />}
-                </fieldset>
-                <button className="button-secondary w-1/2 m-auto">Create Post</button>
-            </form>
-        </div>
-    )
+          if (values.image?.length) {
+            imageForm.append('image', values.image[0])
+          }
+          mutate({ title: values.title, content: values.content, image: imageForm })
+        })}
+        className="flex flex-col gap-6"
+      >
+        <fieldset className="flex flex-col gap-2">
+          <label htmlFor="title" className="font-medium text-gray-700">Post Title</label>
+          <input
+            className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            {...register("title")}
+            id="title"
+            placeholder="Enter post title"
+          />
+          {errors.title && <ErrorMessage message={errors.title.message!} />}
+        </fieldset>
+
+        <fieldset className="flex flex-col gap-2">
+          <label htmlFor="content" className="font-medium text-gray-700">What are you going to talk about?</label>
+          <textarea
+            className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[120px]"
+            {...register("content")}
+            id="content"
+            placeholder="Start talking..."
+          />
+          {errors.content && <ErrorMessage message={errors.content.message!} />}
+        </fieldset>
+
+        <fieldset className="flex flex-col gap-2">
+          <label htmlFor="image" className="font-medium text-gray-700 mb-2">Upload an image</label>
+          <input
+            type="file"
+            {...register("image")}
+            id="image"
+            className="block w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-md 
+              file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-600 
+              hover:file:bg-blue-100 cursor-pointer"
+          />
+          {errors.image && <ErrorMessage message={errors.image.message!} />}
+        </fieldset>
+
+        <button
+          type="submit"
+          className="mt-4  bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded-lg transition-colors  w-1/2 mx-auto block"
+        >
+          Create Post
+        </button>
+      </form>
+    </div>
+  )
 }
 
 export default CreatePage
