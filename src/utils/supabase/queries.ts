@@ -1,11 +1,34 @@
+
 import { createClient } from "./browser-client";
 import { type QueryData } from "@supabase/supabase-js";
 
-export const getHomePosts = async(supabase: ReturnType<typeof createClient>) => {
-  return await supabase.from('posts')
-                  .select('id, title, slug, image, users("username"), comments(count)')
-                  .order('created_at', {ascending: false});
-}
+export const getHomePosts = async () => {
+  const supabase = createClient();
+  const { data, error } = await supabase
+    .from("posts")
+    .select(`
+      id,
+      title,
+      slug,
+      image,
+      created_at,
+      users (
+        username
+      ),
+      comments (
+        id
+      )
+    `)
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    console.error("Error fetching home posts:", error.message);
+    return [];
+  }
+
+  return data;
+};
+
 
 export const getSinglePost = async (slug: string) => {
   const supabase = createClient();
@@ -24,11 +47,11 @@ export const getSearchPosts = async (searchTerm: string) => {
 
 export type HomePostType = QueryData<ReturnType<typeof getHomePosts>>;
 
-// UPDATED: Fetch comments with nested structure
+// Fetch comments with nested structure
 export const getCommentsByPostId = async (postId: number) => {
   const supabase = createClient();
   
-  // Fetch all comments (both parent and replies)
+  // Fetch all comments both parent and replies
   const { data, error } = await supabase
     .from("comments")
     .select("id, content, created_at, user_id, parent_id, users(username)")

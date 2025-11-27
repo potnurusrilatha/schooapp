@@ -113,7 +113,7 @@ export default function SignupPage() {
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                     className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-600 focus:border-transparent"
-                    placeholder="johndoe"
+                    placeholder="srilatha"
                   />
                 </div>
               </div>
@@ -134,7 +134,7 @@ export default function SignupPage() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-600 focus:border-transparent"
-                    placeholder="john@example.com"
+                    placeholder="srilatha@example.com"
                   />
                 </div>
               </div>
