@@ -12,7 +12,10 @@ import { uploadImage } from "@/utils/supabase/upload-image"
 export const CreatePost = async (userdata: z.infer<typeof postSchema>)=> {
     console.log("Image parameter", typeof userdata.image)
     const parsedData = postSchema.parse(userdata)
-    const slug = slugify(parsedData.title)
+    
+    // Add random suffix to ensure unique slug
+    const randomSuffix = Math.random().toString(36).substring(2, 8);
+    const slug = `${slugify(parsedData.title)}-${randomSuffix}`;
 
     const imageFile = userdata.image?.get("image")
      

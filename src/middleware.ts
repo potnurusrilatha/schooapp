@@ -34,9 +34,9 @@ export async function middleware(request: NextRequest) {
 
   // Protected routes that require authentication
   const protectedRoutes = [
-    /^\/create$/,           // Creating posts
-    /^\/edit\/.+$/,         // Editing posts
-    /^\/profile$/,          // User profile
+    /^\/create$/,          
+    /^\/edit\/.+$/,         
+    /^\/profile$/,         
   ];
 
   // Check if current route is protected
@@ -53,7 +53,7 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(newUrl);
   }
 
-  // If user IS logged in and trying to access login/signup pages
+  
   // Redirect them to home
   const authPages = ['/login', '/signup'];
   if (user && authPages.includes(request.nextUrl.pathname)) {
@@ -65,17 +65,8 @@ export async function middleware(request: NextRequest) {
   return supabaseResponse;
 }
 
-// Configure which routes the middleware should run on
 export const config = {
   matcher: [
-    /*
-     * Match all request paths except for the ones starting with:
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.ico (favicon file)
-     * - public folder
-     * - api routes
-     */
     '/((?!_next/static|_next/image|favicon.ico|api|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
   ],
 };

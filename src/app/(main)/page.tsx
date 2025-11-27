@@ -7,11 +7,11 @@ import { MessageCircle, Calendar, User, ArrowRight } from "lucide-react";
 export const revalidate = 600;
 
 export default async function Home() {
-  const supabase = createClient();
-  const { data, error } = await getHomePosts(supabase);
+    const data = await getHomePosts();
 
-  if (error) return <p className="text-center text-red-500 mt-10">Failed to load posts.</p>;
-
+  if (!data || data.length === 0) {
+    // Handle empty state below
+  }
   return (
     <>
       {/* Hero Section */}

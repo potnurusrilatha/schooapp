@@ -51,31 +51,30 @@ export type HomePostType = QueryData<ReturnType<typeof getHomePosts>>;
 export const getCommentsByPostId = async (postId: number) => {
   const supabase = createClient();
   
-  // Fetch all comments both parent and replies
   const { data, error } = await supabase
     .from("comments")
-    .select("id, content, created_at, user_id, parent_id, users(username)")
+    .select("id, content, created_at, user_id, parent_id, users!fk_comments_public_users(username)")  // Add !fk_comments_public_users
     .eq("post_id", postId)
     .order("created_at", { ascending: true });
 
+  console.log("Fetching comments for postId:", postId);
+  console.log("Comments data:", data);
+  console.log("Comments error:", error);
+
   if (error) return { data: null, error };
 
-  // Organize comments into nested structure
+  //  comments into nested structure
   const commentMap = new Map();
   const rootComments: any[] = [];
 
-  // First pass: create a map of all comments
   data?.forEach((comment) => {
     commentMap.set(comment.id, { ...comment, replies: [] });
   });
 
-  // Second pass: organize into tree structure
   data?.forEach((comment) => {
     if (comment.parent_id === null) {
-      // Root comment
       rootComments.push(commentMap.get(comment.id));
     } else {
-      // Reply to another comment
       const parent = commentMap.get(comment.parent_id);
       if (parent) {
         parent.replies.push(commentMap.get(comment.id));
