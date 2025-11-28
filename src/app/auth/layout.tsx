@@ -1,3 +1,5 @@
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 const AuthLayout = ({
     children,
@@ -6,11 +8,11 @@ const AuthLayout = ({
 }>) => {
     return (
         <>
-        <header className="flex, justify-center, items-center, flex-wrap">
-        
-            </header>
+            <Header />
             {children}
+            <Footer />
         </>
     )
 }
+
 export default AuthLayout;

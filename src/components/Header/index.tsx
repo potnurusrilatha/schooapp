@@ -71,7 +71,7 @@ const Header = async () => {
             ) : (
               <>
                 <Link
-                  href="/login"
+                  href="/auth/login"
                   className="px-4 py-2 text-gray-700 hover:text-red-600 transition-colors font-medium"
                 >
                   Login
